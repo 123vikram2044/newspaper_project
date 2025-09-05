@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Dashboard</h2>
+
+<h4>Recommended for You</h4>
+<div class="row">
+    {% for article in recommended %}
+    <div class="col-md-4">
+        <div class="card p-3 mb-3">
+            <h5>{{ article.title }}</h5>
+            <p>{{ article.content[:100] }}...</p>
+            <a href="/article/{{ article.id }}" class="btn btn-primary btn-sm">Read More</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<h4>All News</h4>
+<div class="row">
+    {% for article in articles %}
+    <div class="col-md-4">
+        <div class="card p-3 mb-3">
+            <h5>{{ article.title }}</h5>
+            <p>{{ article.content[:100] }}...</p>
+            <a href="/article/{{ article.id }}" class="btn btn-primary btn-sm">Read More</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

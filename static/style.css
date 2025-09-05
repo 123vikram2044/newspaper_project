@@ -1,0 +1,15 @@
+body {
+    font-family: Arial;
+    margin: 20px;
+    background: #f8f9fa;
+}
+h1, h2 {
+    color: #333;
+}
+a {
+    text-decoration: none;
+    color: blue;
+}
+a:hover {
+    color: darkred;
+}
