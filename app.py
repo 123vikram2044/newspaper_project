@@ -3,12 +3,14 @@ import random
 import hashlib
 import datetime
 import requests
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, abort
 from flask_sqlalchemy import SQLAlchemy
 
 # ---------------- CONFIG ----------------
 API_KEY = os.environ.get("NEWS_API_KEY")   # set this on Render (and locally for testing)
 SECRET_KEY = os.environ.get("SECRET_KEY", "change_this_secret_for_prod")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@example.com")  # 👈 your admin email
+
 TOP_NEWS_URL = "https://newsapi.org/v2/top-headlines"
 SEARCH_URL = "https://newsapi.org/v2/everything"
 
@@ -138,6 +140,7 @@ def login():
         user = User.query.filter_by(email=email, password_hash=password).first()
         if user:
             session["user_id"] = user.id
+            session["email"] = user.email  # store email for admin check
             return redirect(url_for("home"))
         return "Invalid credentials"
     return render_template("login.html")
@@ -145,6 +148,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("user_id", None)
+    session.pop("email", None)
     return redirect(url_for("home"))
 
 @app.route("/article/<string:title>")
@@ -154,6 +158,24 @@ def article(title):
     db.session.add(Activity(user_id=session["user_id"], article_title=title))
     db.session.commit()
     return f"<h1>{title}</h1><p>Open source link from the card to read full story.</p>"
+
+# ---------------- ADMIN ROUTES ----------------
+def admin_required():
+    """Check if logged-in user is admin"""
+    if session.get("email") != ADMIN_EMAIL:
+        abort(403)
+
+@app.route("/admin/users")
+def show_users():
+    admin_required()
+    users = User.query.all()
+    return "<br>".join([f"ID: {u.id}, Name: {u.name}, Email: {u.email}, Interests: {u.interests}" for u in users])
+
+@app.route("/admin/usercount")
+def user_count():
+    admin_required()
+    count = User.query.count()
+    return f"Total registered users: {count}"
 
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
