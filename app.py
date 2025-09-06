@@ -9,7 +9,9 @@ from flask_sqlalchemy import SQLAlchemy
 # ---------------- CONFIG ----------------
 API_KEY = os.environ.get("NEWS_API_KEY")   # set this on Render (and locally for testing)
 SECRET_KEY = os.environ.get("SECRET_KEY", "change_this_secret_for_prod")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@example.com")  # 👈 your admin email
+
+# 👇 admin email (default set to your email)
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "vikramchoudhary3107@gmail.com")
 
 TOP_NEWS_URL = "https://newsapi.org/v2/top-headlines"
 SEARCH_URL = "https://newsapi.org/v2/everything"
