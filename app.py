@@ -9,9 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 # ---------------- CONFIG ----------------
 API_KEY = os.environ.get("NEWS_API_KEY")   # set this on Render (and locally for testing)
 SECRET_KEY = os.environ.get("SECRET_KEY", "change_this_secret_for_prod")
-
-# 👇 admin email (default set to your email)
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "vikramchoudhary3107@gmail.com")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@example.com")  # 👈 set admin email in Render
 
 TOP_NEWS_URL = "https://newsapi.org/v2/top-headlines"
 SEARCH_URL = "https://newsapi.org/v2/everything"
@@ -171,13 +169,13 @@ def admin_required():
 def show_users():
     admin_required()
     users = User.query.all()
-    return "<br>".join([f"ID: {u.id}, Name: {u.name}, Email: {u.email}, Interests: {u.interests}" for u in users])
+    return render_template("admin_users.html", users=users)
 
 @app.route("/admin/usercount")
 def user_count():
     admin_required()
     count = User.query.count()
-    return f"Total registered users: {count}"
+    return render_template("admin_usercount.html", count=count)
 
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
