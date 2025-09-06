@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Users</title>
+    <style>
+        body {
+            font-family: 'Consolas', monospace;
+            background: #121212;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #00e676;
+        }
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            background: #1e1e1e;
+            box-shadow: 0 0 10px rgba(0,255,150,0.3);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #333;
+            text-align: left;
+        }
+        th {
+            background: #00e676;
+            color: #121212;
+        }
+        tr:nth-child(even) {
+            background: #2c2c2c;
+        }
+        tr:hover {
+            background: #333;
+        }
+        .logout {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #00e676;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>👨‍💻 Registered Users</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Interests</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.interests }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('logout') }}" class="logout">🚪 Logout</a>
+</body>
+</html>

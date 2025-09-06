@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - User Count</title>
+    <style>
+        body {
+            font-family: 'Consolas', monospace;
+            background: #121212;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .card {
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,255,150,0.3);
+        }
+        h1 {
+            color: #00e676;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>👥 User Statistics</h1>
+        <p>Total registered users: <strong style="color:#00e676;">{{ count }}</strong></p>
+    </div>
+</body>
+</html>
